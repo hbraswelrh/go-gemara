@@ -50,7 +50,9 @@ const (
 	NeedsReview
 	NotApplicable
 	Unknown
+)
 
+const (
 	ControlCatalogArtifact ArtifactType = iota
 	EvaluationLogArtifact
 	GuidanceCatalogArtifact
@@ -58,27 +60,37 @@ const (
 	PolicyArtifact
 	ThreatCatalogArtifact
 	VectorCatalogArtifact
+)
 
+const (
 	Human EntityType = iota
 	Software
 	SoftwareAssisted
+)
 
+const (
 	LifecycleActive Lifecycle = iota
 	LifecycleDraft
 	LifecycleDeprecated
 	LifecycleRetired
+)
 
+const (
 	EntryTypeGuideline EntryType = iota
 	EntryTypeStatement
 	EntryTypeControl
 	EntryTypeAssessmentRequirement
 	EntryTypeVector
+)
 
+const (
 	Undetermined ConfidenceLevel = iota
 	Low
 	Medium
 	High
+)
 
+const (
 	RelImplements RelationshipType = iota
 	RelImplementedBy
 	RelSupports
@@ -87,28 +99,38 @@ const (
 	RelSubsumes
 	RelNoMatch
 	RelRelatesTo
+)
 
+const (
 	MethodManual MethodType = iota
 	MethodBehavioral
 	MethodAutomated
 	MethodAutoremediation
 	MethodGate
+)
 
+const (
 	SeverityLow Severity = iota
 	SeverityMedium
 	SeverityHigh
 	SeverityCritical
+)
 
+const (
 	GuidanceStandard GuidanceType = iota
 	GuidanceRegulation
 	GuidanceBestPractice
 	GuidanceFramework
+)
 
+const (
 	RiskAppetiteZero RiskAppetite = iota
 	RiskAppetiteLow
 	RiskAppetiteModerate
 	RiskAppetiteHigh
+)
 
+const (
 	ModAdd ModType = iota
 	ModModify
 	ModRemove
@@ -150,51 +172,51 @@ var (
 	}
 
 	artifactTypeToString = map[ArtifactType]string{
-		ControlCatalogArtifact:  "Control Catalog",
-		EvaluationLogArtifact:   "Evaluation Log",
-		GuidanceCatalogArtifact: "Guidance Catalog",
-		MappingDocumentArtifact: "Mapping Document",
+		ControlCatalogArtifact:  "ControlCatalog",
+		EvaluationLogArtifact:   "EvaluationLog",
+		GuidanceCatalogArtifact: "GuidanceCatalog",
+		MappingDocumentArtifact: "MappingDocument",
 		PolicyArtifact:          "Policy",
-		ThreatCatalogArtifact:   "Threat Catalog",
-		VectorCatalogArtifact:   "Vector Catalog",
+		ThreatCatalogArtifact:   "ThreatCatalog",
+		VectorCatalogArtifact:   "VectorCatalog",
 	}
 
 	stringToArtifactType = map[string]ArtifactType{
-		"Control Catalog":  ControlCatalogArtifact,
-		"Evaluation Log":   EvaluationLogArtifact,
-		"Guidance Catalog": GuidanceCatalogArtifact,
-		"Mapping Document": MappingDocumentArtifact,
-		"Policy":           PolicyArtifact,
-		"Threat Catalog":   ThreatCatalogArtifact,
-		"Vector Catalog":   VectorCatalogArtifact,
+		"ControlCatalog":  ControlCatalogArtifact,
+		"EvaluationLog":   EvaluationLogArtifact,
+		"GuidanceCatalog": GuidanceCatalogArtifact,
+		"MappingDocument": MappingDocumentArtifact,
+		"Policy":          PolicyArtifact,
+		"ThreatCatalog":   ThreatCatalogArtifact,
+		"VectorCatalog":   VectorCatalogArtifact,
 	}
 
 	entityTypeToString = map[EntityType]string{
 		Human:            "Human",
 		Software:         "Software",
-		SoftwareAssisted: "Software-Assisted",
+		SoftwareAssisted: "Software Assisted",
 	}
 
 	stringToEntityType = map[string]EntityType{
 		"Human":             Human,
 		"Software":          Software,
-		"Software-Assisted": SoftwareAssisted,
+		"Software Assisted": SoftwareAssisted,
 	}
 
 	entryTypeToString = map[EntryType]string{
 		EntryTypeGuideline:             "Guideline",
 		EntryTypeStatement:             "Statement",
 		EntryTypeControl:               "Control",
-		EntryTypeAssessmentRequirement: "Assessment Requirement",
+		EntryTypeAssessmentRequirement: "AssessmentRequirement",
 		EntryTypeVector:                "Vector",
 	}
 
 	stringToEntryType = map[string]EntryType{
-		"Guideline":              EntryTypeGuideline,
-		"Statement":              EntryTypeStatement,
-		"Control":                EntryTypeControl,
-		"Assessment Requirement": EntryTypeAssessmentRequirement,
-		"Vector":                 EntryTypeVector,
+		"Guideline":             EntryTypeGuideline,
+		"Statement":             EntryTypeStatement,
+		"Control":               EntryTypeControl,
+		"AssessmentRequirement": EntryTypeAssessmentRequirement,
+		"Vector":                EntryTypeVector,
 	}
 
 	confidenceLevelToString = map[ConfidenceLevel]string{
