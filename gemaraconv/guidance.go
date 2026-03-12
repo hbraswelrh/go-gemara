@@ -309,8 +309,8 @@ func guidelineToControl(g *gemara.GuidanceCatalog, guideline gemara.Guideline, r
 		links = append(links, relatedLink)
 	}
 
-	guidanceLinks := mappingToLinks(guideline.GuidelineMappings, resourcesMap)
-	principleLinks := mappingToLinks(guideline.PrincipleMappings, resourcesMap)
+	guidanceLinks := mappingToLinks(guideline.Vectors, resourcesMap)
+	principleLinks := mappingToLinks(guideline.Principles, resourcesMap)
 	links = append(links, guidanceLinks...)
 	links = append(links, principleLinks...)
 	control.Links = oscalUtils.NilIfEmpty(links)
