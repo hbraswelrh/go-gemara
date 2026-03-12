@@ -13,7 +13,7 @@ type Result int
 // ArtifactType identifies the kind of Gemara artifact for unambiguous parsing
 type ArtifactType int
 
-// EntityType
+// EntityType specifies the type of entity (human or tool) interacting in the workflow.
 type EntityType int
 
 // Lifecycle represents the lifecycle state of a guideline, control, or assessment requirement
@@ -58,6 +58,12 @@ const (
 	PolicyArtifact
 	ThreatCatalogArtifact
 	VectorCatalogArtifact
+)
+
+const (
+	Human EntityType = iota
+	Software
+	SoftwareAssisted
 )
 
 const (
@@ -159,6 +165,18 @@ var stringToLifecycle = map[string]Lifecycle{
 	"Draft":      LifecycleDraft,
 	"Deprecated": LifecycleDeprecated,
 	"Retired":    LifecycleRetired,
+}
+
+var entityTypeToString = map[EntityType]string{
+	Human:            "Human",
+	Software:         "Software",
+	SoftwareAssisted: "Software-Assisted",
+}
+
+var stringToEntityType = map[string]EntityType{
+	"Human":             Human,
+	"Software":          Software,
+	"Software-Assisted": SoftwareAssisted,
 }
 
 var entryTypeToString = map[EntryType]string{
@@ -336,6 +354,30 @@ func (r Result) MarshalYAML() (interface{}, error) {
 // MarshalJSON ensures that Result is serialized as a string in JSON
 func (r Result) MarshalJSON() ([]byte, error) {
 	return marshalJSONString(r)
+}
+
+func (e EntityType) String() string {
+	return entityTypeToString[e]
+}
+
+// MarshalYAML ensures that EntityType is serialized as a string in YAML
+func (e EntityType) MarshalYAML() (interface{}, error) {
+	return marshalYAMLString(e)
+}
+
+// MarshalJSON ensures that EntityType is serialized as a string in JSON
+func (e EntityType) MarshalJSON() ([]byte, error) {
+	return marshalJSONString(e)
+}
+
+// UnmarshalYAML ensures that EntityType can be deserialized from a YAML string
+func (e *EntityType) UnmarshalYAML(data []byte) error {
+	return unmarshalYAMLEnum(data, stringToEntityType, "EntityType", e)
+}
+
+// UnmarshalJSON ensures that EntityType can be deserialized from a JSON string
+func (e *EntityType) UnmarshalJSON(data []byte) error {
+	return unmarshalJSONEnum(data, stringToEntityType, "EntityType", e)
 }
 
 func (l Lifecycle) String() string {
