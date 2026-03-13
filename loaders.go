@@ -83,7 +83,10 @@ func (c *ControlCatalog) LoadFiles(sourcePaths []string) error {
 		}
 		c.Families = append(c.Families, catalog.Families...)
 		c.Controls = append(c.Controls, catalog.Controls...)
-		if c.Imports != nil {
+		if catalog.Imports != nil {
+			if c.Imports == nil {
+				c.Imports = &ControlCatalogImports{}
+			}
 			c.Imports.Controls = append(c.Imports.Controls, catalog.Imports.Controls...)
 		}
 
