@@ -246,26 +246,6 @@ type Catalog struct {
 	Imports []MultiEntryMapping `json:"imports,omitempty" yaml:"imports,omitempty"`
 }
 
-// ControlCatalog describes a set of related controls and relevant metadata
-type ControlCatalog struct {
-	// title describes the purpose of this catalog at a glance
-	Title string `json:"title" yaml:"title"`
-
-	// metadata provides detailed data about this catalog
-	Metadata Metadata `json:"metadata" yaml:"metadata"`
-
-	// controls is a list of unique controls defined by this catalog
-	Controls []Control `json:"controls,omitempty" yaml:"controls,omitempty"`
-
-	// groups contains a list of groups that can be referenced by entries in this catalog
-	Groups []Group `json:"groups,omitempty" yaml:"groups,omitempty"`
-
-	// extends references catalogs that this catalog builds upon
-	Extends []ArtifactMapping `json:"extends,omitempty" yaml:"extends,omitempty"`
-
-	Imports []MultiEntryMapping `json:"imports,omitempty" yaml:"imports,omitempty"`
-}
-
 // Control describes a safeguard or countermeasure with a clear objective and assessment requirements
 type Control struct {
 	// id allows this entry to be referenced by other elements
