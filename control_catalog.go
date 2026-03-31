@@ -2,42 +2,42 @@ package gemara
 
 import "sync"
 
-// SugaredControlCatalog wraps the generated ControlCatalog with
+// SControlCatalog wraps the generated ControlCatalog with
 // pre-built indexes for efficient group, control, and requirement lookups.
-type SugaredControlCatalog struct {
+type SControlCatalog struct {
 	ControlCatalog
 
 	groupsOnce  sync.Once
 	groupsCache []string
 
 	sugarControlsOnce  sync.Once
-	sugarControlsCache []*SugaredControl
+	sugarControlsCache []*SControl
 
 	controlsByGroupOnce  sync.Once
-	controlsByGroupCache map[string][]*SugaredControl
+	controlsByGroupCache map[string][]*SControl
 
 	requirementsOnce  sync.Once
 	requirementsCache map[string][]AssessmentRequirement
 }
 
-// Sugar wraps this ControlCatalog in a SugaredControlCatalog for
+// Sugar wraps this ControlCatalog in a SControlCatalog for
 // convenient cached helper access.
-func (c ControlCatalog) Sugar() *SugaredControlCatalog {
-	return &SugaredControlCatalog{ControlCatalog: c}
+func (c ControlCatalog) Sugar() *SControlCatalog {
+	return &SControlCatalog{ControlCatalog: c}
 }
 
-// SugaredControls returns all controls as cached SugaredControl instances.
-func (c *SugaredControlCatalog) SugaredControls() []*SugaredControl {
+// SControls returns all controls as cached SControl instances.
+func (c *SControlCatalog) SControls() []*SControl {
 	c.sugarControlsOnce.Do(func() {
-		c.sugarControlsCache = make([]*SugaredControl, len(c.Controls))
+		c.sugarControlsCache = make([]*SControl, len(c.Controls))
 		for i := range c.Controls {
-			c.sugarControlsCache[i] = &SugaredControl{Control: c.Controls[i]}
+			c.sugarControlsCache[i] = &SControl{Control: c.Controls[i]}
 		}
 	})
 	return c.sugarControlsCache
 }
 
-func (c *SugaredControlCatalog) GetGroupNames() []string {
+func (c *SControlCatalog) GetGroupNames() []string {
 	c.groupsOnce.Do(func() {
 		for _, group := range c.Groups {
 			c.groupsCache = append(c.groupsCache, group.Title)
@@ -46,10 +46,10 @@ func (c *SugaredControlCatalog) GetGroupNames() []string {
 	return c.groupsCache
 }
 
-func (c *SugaredControlCatalog) GetControlsForGroup(group string) []*SugaredControl {
+func (c *SControlCatalog) GetControlsForGroup(group string) []*SControl {
 	c.controlsByGroupOnce.Do(func() {
-		c.controlsByGroupCache = make(map[string][]*SugaredControl)
-		for _, sc := range c.SugaredControls() {
+		c.controlsByGroupCache = make(map[string][]*SControl)
+		for _, sc := range c.SControls() {
 			c.controlsByGroupCache[sc.Group] = append(
 				c.controlsByGroupCache[sc.Group], sc,
 			)
@@ -58,7 +58,7 @@ func (c *SugaredControlCatalog) GetControlsForGroup(group string) []*SugaredCont
 	return c.controlsByGroupCache[group]
 }
 
-func (c *SugaredControlCatalog) GetRequirementForApplicability(applicability string) []AssessmentRequirement {
+func (c *SControlCatalog) GetRequirementForApplicability(applicability string) []AssessmentRequirement {
 	c.requirementsOnce.Do(func() {
 		c.requirementsCache = make(map[string][]AssessmentRequirement)
 		for _, control := range c.Controls {

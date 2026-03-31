@@ -2,22 +2,22 @@ package gemara
 
 import "sync"
 
-// SugaredControl wraps the generated Control with cached
+// SControl wraps the generated Control with cached
 // cross-reference lookups.
-type SugaredControl struct {
+type SControl struct {
 	Control
 
 	referencesOnce  sync.Once
 	referencesCache []string
 }
 
-// Sugar wraps this Control in a SugaredControl for convenient
+// Sugar wraps this Control in a SControl for convenient
 // cached helper access.
-func (c Control) Sugar() *SugaredControl {
-	return &SugaredControl{Control: c}
+func (c Control) Sugar() *SControl {
+	return &SControl{Control: c}
 }
 
-func (c *SugaredControl) GetMappingReferences() []string {
+func (c *SControl) GetMappingReferences() []string {
 	c.referencesOnce.Do(func() {
 		for _, ref := range c.Guidelines {
 			c.referencesCache = append(c.referencesCache, ref.ReferenceId)
